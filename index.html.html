@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flores Amarillas</title>
+  <style>
+    :root {
+      --bg: #fffbea;
+      --card: rgba(255,255,255,0.85);
+      --text: #8c6a00;
+      --shadow: 0 6px 18px rgba(0,0,0,0.25);
+      --yellow: #ffd54d;
+      --yellow-dark: #f4c02a;
+      --green: #2e7d32;
+      --wrap: #dba27c;
+      --wrap-dark: #c7895d;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    /* Mensaje superior */
+    .mensaje {
+      position: absolute;
+      top: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: var(--card);
+      padding: 16px 22px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      max-width: min(90vw, 680px);
+      text-align: center;
+      animation: aparecer 900ms ease-out both;
+      backdrop-filter: blur(4px);
+    }
+    .mensaje h1 {
+      margin: 0;
+      font-weight: 600;
+      color: var(--text);
+      font-size: clamp(18px, 3.5vw, 28px);
+      line-height: 1.3;
+    }
+
+    /* Bouquet centrado con animación */
+    .bouquet {
+      position: absolute;
+      bottom: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(65vw, 340px);
+      max-width: 420px;
+      z-index: 5;
+      animation: subir 900ms ease-out both, latido 3.5s ease-in-out 900ms infinite;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.3));
+    }
+
+    /* Flores cayendo (emojis) */
+    .flor {
+      position: absolute;
+      top: -50px;
+      font-size: 28px;
+      line-height: 1;
+      animation: caer linear infinite;
+      will-change: transform;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes caer {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+    @keyframes subir {
+      from { transform: translate(-50%, 40px); opacity: 0; }
+      to   { transform: translate(-50%, 0);   opacity: 1; }
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translate(-50%, -6px); }
+      to   { opacity: 1; transform: translate(-50%, 0); }
+    }
+    @keyframes latido {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.03); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Mensaje -->
+  <div class="mensaje">
+    <h1>Aunque la distancia nos separe, cada flor amarilla me recuerda lo mucho que te pienso y lo cerca que te siento 💛</h1>
+  </div>
+
+  <!-- Bouquet SVG inline, sin depender de imágenes externas -->
+  <svg class="bouquet" viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg" aria-label="Bouquet de flores amarillas decorativo" role="img">
+    <!-- Envoltura -->
+    <defs>
+      <linearGradient id="wrapGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--wrap)" />
+        <stop offset="100%" stop-color="var(--wrap-dark)" />
+      </linearGradient>
+      <radialGradient id="center" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffec8a"/>
+        <stop offset="100%" stop-color="var(--yellow-dark)"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Papel de envoltura -->
+    <path d="M60,220 C50,300 80,360 160,400 C240,360 270,300 260,220 Z" fill="url(#wrapGrad)"/>
+    <path d="M65,230 C70,290 95,345 160,378 C225,345 250,290 255,230 Z" fill="none" stroke="#b5764e" stroke-opacity="0.4" stroke-width="4"/>
+
+    <!-- Tallos -->
+    <g stroke="var(--green)" stroke-width="6" stroke-linecap="round">
+      <path d="M155,220 C150,300 150,360 160,390"/>
+      <path d="M165,220 C170,300 170,360 160,390"/>
+      <path d="M135,210 C125,260 135,330 160,390"/>
+      <path d="M185,210 C195,260 185,330 160,390"/>
+      <path d="M115,205 C110,255 125,330 160,390"/>
+      <path d="M205,205 C210,255 195,330 160,390"/>
+    </g>
+
+    <!-- Hojas -->
+    <g fill="var(--green)" opacity="0.9">
+      <ellipse cx="120" cy="260" rx="18" ry="36" transform="rotate(-28 120 260)" />
+      <ellipse cx="200" cy="260" rx="18" ry="36" transform="rotate(28 200 260)" />
+      <ellipse cx="100" cy="235" rx="16" ry="28" transform="rotate(-18 100 235)" />
+      <ellipse cx="220" cy="235" rx="16" ry="28" transform="rotate(18 220 235)" />
+    </g>
+
+    <!-- Flores (círculos amarillos con centro) -->
+    <g>
+      <!-- función: pétalos -->
+      <!-- fila frontal -->
+      <g transform="translate(160,180)">
+        <g>
+          <circle cx="-40" cy="-10" r="16" fill="var(--yellow)"/>
+          <circle cx="-40" cy="-10" r="7" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="-10" cy="-25" r="18" fill="var(--yellow)"/>
+          <circle cx="-10" cy="-25" r="8" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="22" cy="-14" r="17" fill="var(--yellow)"/>
+          <circle cx="22" cy="-14" r="7.5" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="48" cy="-28" r="15" fill="var(--yellow)"/>
+          <circle cx="48" cy="-28" r="6.5" fill="url(#center)"/>
+        </g>
+      </g>
+
+      <!-- fila media -->
+      <g transform="translate(160,155)" opacity="0.95">
+        <g>
+          <circle cx="-55" cy="-5" r="16" fill="var(--yellow)"/>
+          <circle cx="-55" cy="-5" r="7" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="-25" cy="-22" r="18" fill="var(--yellow)"/>
+          <circle cx="-25" cy="-22" r="8" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="8" cy="-12" r="17" fill="var(--yellow)"/>
+          <circle cx="8" cy="-12" r="7.5" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="36" cy="-26" r="16" fill="var(--yellow)"/>
+          <circle cx="36" cy="-26" r="7" fill="url(#center)"/>
+        </g>
+      </g>
+
+      <!-- fila trasera -->
+      <g transform="translate(160,135)" opacity="0.85">
+        <g>
+          <circle cx="-35" cy="-8" r="14" fill="var(--yellow)"/>
+          <circle cx="-35" cy="-8" r="6.5" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="-8" cy="-20" r="16" fill="var(--yellow)"/>
+          <circle cx="-8" cy="-20" r="7" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="18" cy="-10" r="15" fill="var(--yellow)"/>
+          <circle cx="18" cy="-10" r="6.5" fill="url(#center)"/>
+        </g>
+        <g>
+          <circle cx="42" cy="-24" r="14" fill="var(--yellow)"/>
+          <circle cx="42" cy="-24" r="6" fill="url(#center)"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Listón -->
+    <g>
+      <ellipse cx="160" cy="270" rx="34" ry="20" fill="#f29eaa" opacity="0.85"/>
+      <path d="M160,270 C145,295 125,310 105,318 C118,300 130,287 140,275 Z" fill="#f29eaa" opacity="0.85"/>
+      <path d="M160,270 C175,295 195,310 215,318 C202,300 190,287 180,275 Z" fill="#f29eaa" opacity="0.85"/>
+      <circle cx="160" cy="270" r="10" fill="#e96d80"/>
+    </g>
+  </svg>
+
+  <script>
+    // Flores cayendo (emoji) - sin recursos externos
+    function crearFlor() {
+      const flor = document.createElement("div");
+      flor.className = "flor";
+      flor.textContent = "🌼";
+      flor.style.left = Math.random() * window.innerWidth + "px";
+      const dur = 6 + Math.random() * 6; // 6-12s
+      flor.style.animationDuration = dur + "s";
+      flor.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+      flor.style.fontSize = (22 + Math.random() * 14) + "px";
+      document.body.appendChild(flor);
+      setTimeout(() => flor.remove(), dur * 1000 + 200);
+    }
+    // Crear varias al inicio
+    for (let i = 0; i < 20; i++) setTimeout(crearFlor, i * 120);
+    // Y luego en intervalo
+    setInterval(crearFlor, 280);
+
+    // Manejo de resize para evitar que queden fuera
+    window.addEventListener("resize", () => {});
+  </script>
+</body>
+</html>
